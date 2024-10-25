@@ -144,11 +144,11 @@ docker-compose up -d hello
 4. 其他django命令用法: `poetry run django --django_args "{runserver|createsuperuser|migrate|...} ..."`
 
 ## Scrapy 配置
-1. 生成模板代码: `poetry run gen scrapy`
+1. 生成模板代码: `poetry run gen scrapy init`
 2. 安装相关依赖: `poetry add scrapy`
-3. 使用scrapy命令 `poetry run scrapy xxx`
-- 生成xxx爬虫: `poetry run scrapy genspider xxx xxx.com`
-- 执行xxx爬虫: `poetry run scrapy crawl xxx`
+- 生成xxx爬虫: `poetry run gen scrapy genspider {name} {domain}`, 该命令生成的Spider在`src/{{ cookiecutter.package_name}}/scrapy/spiders`下, 同时会生成可执行的cmd文件`src/{{ cookiecutter.package_name}}/cmd/{name}.py`
+- 执行xxx爬虫: `poetry run {name} --env [dev|test|pro]`, 部署执行`bash bin/{name}.sh` 或者`docker`执行, 具体参考上文`新增 CMD 命令`
+3. 使用其他的scrapy命令 `poetry run scrapy {crawl|genspider|...} ...`
 
 ## Chrome 配置
 1. 查询`chrome`/`chromedriver`版本: `poetry run chrome list`
@@ -166,7 +166,7 @@ docker-compose up -d hello
 
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
-2. seatools包提供的ENV: 当前环境, dev=开发环境, test=测试环境, pro=生产环境
+2. `seatools`包提供的ENV: 当前环境, dev=开发环境, test=测试环境, pro=生产环境
 
 ## 项目结构说明
 1. `bin/`: 项目运行脚本
@@ -181,7 +181,7 @@ docker-compose up -d hello
 8. `src/{{cookiecutter.package_name}}/models`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
 9. `src/{{cookiecutter.package_name}}/config.py`: 配置工具, 通过该工具可获取配置信息
 10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作
-11. `src/{{cookiecutter.package_name}}/logger.py`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
+11. `src/{{cookiecutter.package_name}}/logger/*`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
 12. `tests/`: 测试代码
 
 ## 功能说明
