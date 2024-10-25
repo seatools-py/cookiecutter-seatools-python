@@ -1,6 +1,6 @@
 # cookiecutter-seatools-python
 
-## 项目地址: [https://gitee.com/dragons96/cookiecutter-seatools-python](https://gitee.com/dragons96/cookiecutter-seatools-python)
+## 项目地址: [https://gitee.com/dragons96/cookiecutter-seatools-python](https://gitee.com/dragons96/cookiecutter-seatools-python), [https://github.com/dragons96/cookiecutter-seatools-python](https://github.com/dragons96/cookiecutter-seatools-python)
 
 ## 使用方法
 1. 安装python3.9+ (省略)
