@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  main:
+    container_name: {{cookiecutter.project_name}}_main
+    build:
+      context: .
+      dockerfile: main.Dockerfile
+    image: {{cookiecutter.project_name}}_main:latest
+    volumes:
+      - ".:/app"

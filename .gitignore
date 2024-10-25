@@ -1,0 +1,5 @@
+/.nox/
+/docs/_build/
+__pycache__/
+.idea/
+.vscode/
