@@ -278,7 +278,7 @@ def generate_scrapy_spider(project_dir: str, package_dir: str,
     """生成scrapy爬虫"""
     scrapy_dir = package_dir + os.sep + 'scrapy'
     if not os.path.exists(scrapy_dir):
-        print(Fore.RED + '请先初始化scrapy项目结构后再生成爬虫')
+        print('请先初始化scrapy项目结构后再生成爬虫')
         return
     if domain.startswith('http://'):
         domain = domain[7:]
