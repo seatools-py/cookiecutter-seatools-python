@@ -7,6 +7,8 @@ from .common import mkdir, create_file, extract_names, add_poetry_script, str_fo
 def generate_cmd(project_dir: str, package_dir: str, override: bool = False,
                  command: str = None,
                  label: Optional[str] = None,
+                 extra_import: Optional[str]='',
+                 extra_run: Optional[str]='',
                  **kwargs):
     """生成poetry cmd命令"""
     label = label or command
@@ -29,7 +31,7 @@ from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_sqlalchem
 from {{ cookiecutter.package_name }} import utils
 from seatools import ioc
 from typing import Optional
-
+${extra_import}
 
 @click.command()
 @click.option('--project_dir', default=None, help='项目目录, 未打包无需传该参数, 自动基于项目树检索')
@@ -60,11 +62,11 @@ def main(project_dir: Optional[str] = None,
     setup_loguru('{}.log'.format(file_name), level=log_level, label='${label}')
     setup_sqlalchemy('{}.sqlalchemy.log'.format(file_name), level=log_level, label='${label}')
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
-
+    ${extra_run}
 
 if __name__ == "__main__":
     main()
-''', label=label), override=override)
+''', label=label, extra_import=extra_import, extra_run=extra_run), override=override)
     add_poetry_script(project_dir, str_format('${command} = "{{cookiecutter.package_name}}.cmd.${cmd_main_name}:main"',
                                               command=command,
                                               cmd_main_name=cmd_main_name))

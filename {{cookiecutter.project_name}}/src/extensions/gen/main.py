@@ -58,14 +58,34 @@ def task(override: Optional[bool] = False,
                   override=override, is_async=is_async)
 
 
-@main.command()
+@main.group()
+@click.help_option('-h', '--help', help='查看命令帮助')
+def scrapy():
+    pass
+
+
+@scrapy.command('init')
 @click.option('--override', is_flag=True, default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
 @click.version_option(version="1.0.0", help='查看命令版本')
 @click.help_option('-h', '--help', help='查看命令帮助')
-def scrapy(override: Optional[bool] = False):
+def scrapy_init(override: Optional[bool] = False):
     project_dir = get_project_dir()
     package_dir = get_package_dir()
     generate_scrapy(project_dir=project_dir, package_dir=package_dir, override=override)
+
+
+@scrapy.command('genspider')
+@click.argument('name')
+@click.argument('domain')
+@click.option('--override', is_flag=True, default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def scrapy_genspider(name: str,
+                     domain: str,
+                     override: Optional[bool] = False):
+    project_dir = get_project_dir()
+    package_dir = get_package_dir()
+    generate_scrapy_spider(project_dir=project_dir, package_dir=package_dir,
+                           name=name, domain=domain, override=override)
 
 
 @main.command()

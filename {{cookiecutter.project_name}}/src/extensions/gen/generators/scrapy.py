@@ -1,5 +1,6 @@
 import os
 from .common import mkdir, create_file, add_poetry_script, extract_names, str_format
+from .cmd import generate_cmd
 
 
 def generate_scrapy(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
@@ -270,3 +271,41 @@ FEED_EXPORT_ENCODING = "utf-8"
 
     gen_scrapy_cfg()
     gen_scrapy_dir()
+
+
+def generate_scrapy_spider(project_dir: str, package_dir: str,
+                           name: str, domain: str, override: bool = False, *args, **kwargs):
+    """生成scrapy爬虫"""
+    scrapy_dir = package_dir + os.sep + 'scrapy'
+    if not os.path.exists(scrapy_dir):
+        print(Fore.RED + '请先初始化scrapy项目结构后再生成爬虫')
+        return
+    if domain.startswith('http://'):
+        domain = domain[7:]
+    elif domain.startswith('https://'):
+        domain = domain[8:]
+    spiders_dir = scrapy_dir + os.sep + 'spiders'
+    names = extract_names(name)
+    spider_name = '_'.join(names)
+    spider_class_name = ''.join([n.title() for n in names])
+    spider_file = spiders_dir + os.sep + spider_name + '.py'
+    create_file(spider_file, str_format("""from typing import Any
+
+import scrapy
+from scrapy.http.response import Response
+from pathlib import Path
+
+
+class ${class_name}Spider(scrapy.Spider):
+    name = "${name}"
+    allowed_domains = ["${domain}"]
+    start_urls = ["https://${domain}"]
+
+    def parse(self, response: Response, **kwargs: Any) -> Any:
+        pass
+""", name=spider_name, class_name=spider_class_name, domain=domain), override=override)
+    # 生成完爬虫程序再生成cmd入口
+    generate_cmd(project_dir, package_dir, override=override,
+                 command=spider_name,
+                 extra_import="from scrapy.cmdline import execute\n",
+                 extra_run=str_format("execute(['scrapy', 'crawl', '${name}'])", name=spider_name))
