@@ -93,6 +93,8 @@ class ClickhouseConfig(CommonDBConfig):
 class SqlalchemyConfig(BaseModel):
     """sqlalchemy相关配置"""
     echo: Optional[bool] = True
+    # 连接池回收周期
+    pool_recycle: Optional[int] = -1
 
 
 class MultiDBConfig(BaseModel):
