@@ -243,7 +243,7 @@ else
     fi
   done
 fi
-pids=$(pgrep -f '{{cookiecutter.project_name}}-[A-Za-z0-9_]*-py3.[0-9]+/bin/fastapi')
+pids=$(pgrep -f '{{cookiecutter.project_name}}-[A-Za-z0-9_\\\\-]*-py3.[0-9]+/bin/fastapi')
 if [ -z "$pids" ]; then
   echo "无正在运行中的进程, 忽略"
 else
