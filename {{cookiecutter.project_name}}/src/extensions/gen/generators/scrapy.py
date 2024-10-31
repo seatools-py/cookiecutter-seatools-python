@@ -269,6 +269,74 @@ FEED_EXPORT_ENCODING = "utf-8"
 # your spiders.
 ''', override=override)
 
+    def gen_scrapy_ext():
+        """生成scrapy拓展"""
+        logger_dir = package_dir + os.sep + 'logger'
+        logger_setup_py = logger_dir + os.sep + 'scrapy_setup.py'
+        create_file(logger_setup_py, '''import logging
+from logging.handlers import TimedRotatingFileHandler
+from seatools.logger import get_loguru_adapter_logging_formatter
+from {{cookiecutter.package_name}}.utils import get_log_path
+from {{cookiecutter.package_name}}.config import cfg
+
+
+def setup_scrapy(file_name,
+                 rotation_type: str = 'd',
+                 rotation: int = 1,
+                 serialize: bool = True,
+                 retention_count: int = 3,
+                 level: str = 'INFO',
+                 label=''):
+    """设置scrapy日志记录, 与loguru相同的日志格式"""
+    # 开启序列化则注入
+    if serialize:
+        # 增加一个适配loguru序列化的日志格式化器
+        formatter_cls = get_loguru_adapter_logging_formatter()
+        # 增加一个文件handler
+        file_handler = TimedRotatingFileHandler(
+            filename=get_log_path(file_name),
+            when=rotation_type,
+            interval=rotation,
+            backupCount=retention_count,
+            encoding='utf-8',
+        )
+
+        file_handler.setFormatter(
+            formatter_cls('%(message)s', extra={'service_name': cfg().project_name, 'label': label}))
+        file_handler.addFilter(lambda e: e.levelno >= logging._nameToLevel[level])
+        logging_logger = logging.getLogger('scrapy')
+        logging_logger.addHandler(file_handler)
+
+
+def setup_scrapy_spider(file_name,
+                        spider_name,
+                        rotation_type: str = 'd',
+                        rotation: int = 1,
+                        serialize: bool = True,
+                        retention_count: int = 3,
+                        level: str = 'INFO',
+                        label=''):
+    """设置scrapy日志记录, 与loguru相同的日志格式"""
+    # 开启序列化则注入
+    if serialize:
+        # 增加一个适配loguru序列化的日志格式化器
+        formatter_cls = get_loguru_adapter_logging_formatter()
+        # 增加一个文件handler
+        file_handler = TimedRotatingFileHandler(
+            filename=get_log_path(file_name),
+            when=rotation_type,
+            interval=rotation,
+            backupCount=retention_count,
+            encoding='utf-8',
+        )
+
+        file_handler.setFormatter(
+            formatter_cls('%(message)s', extra={'service_name': cfg().project_name, 'label': label}))
+        file_handler.addFilter(lambda e: e.levelno >= logging._nameToLevel[level])
+        logging_logger = logging.getLogger(spider_name)
+        logging_logger.addHandler(file_handler)
+''', override=override)
+
     gen_scrapy_cfg()
     gen_scrapy_dir()
 
@@ -294,12 +362,18 @@ def generate_scrapy_spider(project_dir: str, package_dir: str,
 import scrapy
 from scrapy.http.response import Response
 from pathlib import Path
+from demo_seatools.logger.scrapy_setup import setup_scrapy, setup_scrapy_spider
 
 
 class ${class_name}Spider(scrapy.Spider):
     name = "${name}"
     allowed_domains = ["${domain}"]
     start_urls = ["https://${domain}"]
+
+        def __init__(self, seatools_file_name=None, seatools_log_level=None, **kwargs: Any):
+        super().__init__(**kwargs)
+        setup_scrapy('{}.scrapy.log'.format(seatools_file_name), level=seatools_log_level, label='${name}')
+        setup_scrapy_spider('{}.scrapy.{}.log'.format(seatools_file_name, self.name), self.name, level=seatools_log_level, label='${name}')
 
     def parse(self, response: Response, **kwargs: Any) -> Any:
         pass
@@ -308,4 +382,4 @@ class ${class_name}Spider(scrapy.Spider):
     generate_cmd(project_dir, package_dir, override=override,
                  command=spider_name,
                  extra_import="from scrapy.cmdline import execute\n",
-                 extra_run=str_format("execute(['scrapy', 'crawl', '${name}'])", name=spider_name))
+                 extra_run=str_format("execute(['scrapy', 'crawl', '${name}', '-a', 'seatools_file_name={}'.format(file_name), '-a', 'seatools_log_level={}'.format(log_level)])", name=spider_name))
