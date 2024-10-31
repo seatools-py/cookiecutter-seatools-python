@@ -94,7 +94,7 @@ def main(project_dir: Optional[str] = None,
     ioc.run(scan_package_names='{{cookiecutter.package_name}}',
             config_dir=get_config_dir(),
             # db 模块依赖 sqlalchemy, 过滤扫描防止未使用 db 场景报错
-            exclude_modules=['{{cookiecutter.package_name}}.db'],
+            exclude_modules=[],
             )
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
     setup_loguru('flask_{}.log'.format(file_name), level=log_level, label='flask')
