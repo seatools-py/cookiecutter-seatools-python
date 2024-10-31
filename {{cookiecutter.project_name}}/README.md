@@ -1,6 +1,6 @@
 # {{ cookiecutter.friendly_name }}
 
-### 项目仓库地址: https://{{cookiecutter.git_type}}.com_/{{cookiecutter.git_user}}/{{ cookiecutter.project_name }}
+### 项目仓库地址: https://{{cookiecutter.git_type}}.com/{{cookiecutter.git_user}}/{{ cookiecutter.project_name }}
 
 ## 安装依赖
 1. pip install poetry
