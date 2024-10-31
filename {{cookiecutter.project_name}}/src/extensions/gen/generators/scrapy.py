@@ -362,7 +362,6 @@ def generate_scrapy_spider(project_dir: str, package_dir: str,
 
 import scrapy
 from scrapy.http.response import Response
-from pathlib import Path
 from {{cookiecutter.package_name}}.logger.scrapy_setup import setup_scrapy, setup_scrapy_spider
 
 
