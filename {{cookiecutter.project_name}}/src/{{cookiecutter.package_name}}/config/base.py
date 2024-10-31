@@ -38,6 +38,11 @@ def get_extensions_dir():
     return get_project_dir() + os.sep + 'extensions'
 
 
+def get_config_dir():
+    """获取配置文件目录."""
+    return get_project_dir() + os.sep + 'config'
+
+
 def cfg() -> Config:
     """获取配置对象
 

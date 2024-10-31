@@ -231,7 +231,7 @@ import sys
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_sqlalchemy
-from {{ cookiecutter.package_name }}.config import cfg, get_project_dir
+from {{ cookiecutter.package_name }}.config import cfg, get_config_dir
 from typing import Optional
 from seatools import ioc
 from {{ cookiecutter.package_name }}.django.manage import run
@@ -256,7 +256,7 @@ def main(project_dir: Optional[str] = None,
         os.environ['ENV'] = env
     # 运行ioc
     ioc.run(scan_package_names='{{cookiecutter.package_name}}',
-            config_dir=get_project_dir() + os.sep + 'config',
+            config_dir=get_config_dir(),
             # db 模块依赖 sqlalchemy, 过滤扫描防止未使用 db 场景报错
             exclude_modules=['{{cookiecutter.package_name}}.db'],
             )

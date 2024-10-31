@@ -14,7 +14,7 @@ def generate_flask(project_dir: str, package_dir: str, override: bool = False, *
         create_file(flask_app_py, '''from flask import Flask
 from seatools.models import R
 from uvicorn.middleware.wsgi import WSGIMiddleware
-from {{ cookiecutter.package_name }}.config import get_project_dir
+from {{ cookiecutter.package_name }}.config import get_config_dir
 from seatools import ioc
 import os
 from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_uvicorn, setup_sqlalchemy
@@ -22,7 +22,7 @@ from loguru import logger
 
 # 运行ioc
 ioc.run(scan_package_names='{{cookiecutter.package_name}}',
-        config_dir=get_project_dir() + os.sep + 'config',
+        config_dir=get_config_dir(),
         # db 模块依赖 sqlalchemy, 过滤扫描防止未使用 db 场景报错
         exclude_modules=['{{cookiecutter.package_name}}.db'],
         )
@@ -53,7 +53,7 @@ import sys
 import multiprocessing
 import click
 from loguru import logger
-from {{ cookiecutter.package_name }}.config import cfg, get_project_dir
+from {{ cookiecutter.package_name }}.config import cfg, get_config_dir
 from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn, setup_sqlalchemy
 from {{ cookiecutter.package_name }} import utils
 from typing import Optional
@@ -92,7 +92,7 @@ def main(project_dir: Optional[str] = None,
         reload = get_env().is_dev()
     # 运行ioc
     ioc.run(scan_package_names='{{cookiecutter.package_name}}',
-            config_dir=get_project_dir() + os.sep + 'config',
+            config_dir=get_config_dir(),
             # db 模块依赖 sqlalchemy, 过滤扫描防止未使用 db 场景报错
             exclude_modules=['{{cookiecutter.package_name}}.db'],
             )

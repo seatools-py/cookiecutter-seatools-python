@@ -101,7 +101,7 @@ from {{cookiecutter.package_name}}.fastapi.exception_handler import wrapper_exce
 from {{cookiecutter.package_name}}.fastapi.middlewares import wrapper_log_middleware
 from seatools.models import R
 from unique_tools.env import get_env
-from {{ cookiecutter.package_name }}.config import get_project_dir
+from {{ cookiecutter.package_name }}.config import get_config_dir
 from seatools import ioc
 import os
 from seatools.env import get_env
@@ -110,7 +110,7 @@ from loguru import logger
 
 # 运行ioc
 ioc.run(scan_package_names='{{cookiecutter.package_name}}',
-        config_dir=get_project_dir() + os.sep + 'config',
+        config_dir=get_config_dir(),
         # db 模块依赖 sqlalchemy, 过滤扫描防止未使用 db 场景报错
         exclude_modules=['{{cookiecutter.package_name}}.db'],
         )
@@ -152,7 +152,7 @@ import sys
 import multiprocessing
 import click
 from loguru import logger
-from {{cookiecutter.package_name}}.config import cfg, get_project_dir
+from {{cookiecutter.package_name}}.config import cfg, get_config_dir
 from {{cookiecutter.package_name}}.logger import setup_loguru, setup_uvicorn, setup_sqlalchemy
 from {{ cookiecutter.package_name }} import utils
 from seatools.env import get_env
@@ -191,7 +191,7 @@ def main(project_dir: Optional[str] = None,
         reload = get_env().is_dev()
     # 运行ioc
     ioc.run(scan_package_names='{{cookiecutter.package_name}}',
-            config_dir=get_project_dir() + os.sep + 'config',
+            config_dir=get_config_dir(),
             # db 模块依赖 sqlalchemy, 过滤扫描防止未使用 db 场景报错
             exclude_modules=['{{cookiecutter.package_name}}.db'],
             )
