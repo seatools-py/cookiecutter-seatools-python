@@ -339,6 +339,7 @@ def setup_scrapy_spider(file_name,
 
     gen_scrapy_cfg()
     gen_scrapy_dir()
+    gen_scrapy_ext()
 
 
 def generate_scrapy_spider(project_dir: str, package_dir: str,
