@@ -363,7 +363,7 @@ def generate_scrapy_spider(project_dir: str, package_dir: str,
 import scrapy
 from scrapy.http.response import Response
 from pathlib import Path
-from demo_seatools.logger.scrapy_setup import setup_scrapy, setup_scrapy_spider
+from {{cookiecutter.package_name}}.logger.scrapy_setup import setup_scrapy, setup_scrapy_spider
 
 
 class ${class_name}Spider(scrapy.Spider):
@@ -371,7 +371,7 @@ class ${class_name}Spider(scrapy.Spider):
     allowed_domains = ["${domain}"]
     start_urls = ["https://${domain}"]
 
-        def __init__(self, seatools_file_name=None, seatools_log_level=None, **kwargs: Any):
+    def __init__(self, seatools_file_name=None, seatools_log_level=None, **kwargs: Any):
         super().__init__(**kwargs)
         setup_scrapy('{}.scrapy.log'.format(seatools_file_name), level=seatools_log_level, label='${name}')
         setup_scrapy_spider('{}.scrapy.{}.log'.format(seatools_file_name, self.name), self.name, level=seatools_log_level, label='${name}')
