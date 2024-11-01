@@ -116,9 +116,9 @@ ioc.run(scan_package_names='{{cookiecutter.package_name}}',
         )
 
 # 设置日志文件
-setup_loguru('fastapi_{{ cookiecutter.project_name }}.log', label='fastapi')
-setup_logging('fastapi_{{ cookiecutter.project_name }}.sqlalchemy.log', 'sqlalchemy', label='fastapi')
-setup_uvicorn('fastapi_{{ cookiecutter.project_name }}.uvicorn.log', label='fastapi')
+setup_loguru('{{ cookiecutter.project_name }}.log', label='fastapi')
+setup_logging('{{ cookiecutter.project_name }}.sqlalchemy.log', 'sqlalchemy', label='fastapi')
+setup_uvicorn('{{ cookiecutter.project_name }}.uvicorn.log', label='fastapi')
 app = FastAPI(
     title='{{ cookiecutter.friendly_name }}',
     version='1.0',
@@ -196,9 +196,9 @@ def main(project_dir: Optional[str] = None,
             exclude_modules=[],
             )
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup_loguru('fastapi_{}.log'.format(file_name), level=log_level, label='fastapi')
-    setup_logging('fastapi_{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='fastapi')
-    setup_uvicorn('fastapi_{}.uvicorn.log'.format(file_name), level=log_level, label='fastapi')
+    setup_loguru('{}.log'.format(file_name), level=log_level, label='fastapi')
+    setup_logging('{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='fastapi')
+    setup_uvicorn('{}.uvicorn.log'.format(file_name), level=log_level, label='fastapi')
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.fastapi.app:app', host=host, port=port, workers=workers, reload=reload)
 

@@ -261,9 +261,9 @@ def main(project_dir: Optional[str] = None,
             exclude_modules=[],
             )
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup_loguru('django_{}.log'.format(file_name), level=log_level, label='django')
-    setup_logging('django_{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='django')
-    setup_logging('django_{}.django.log'.format(file_name), 'django', level=log_level, label='django')
+    setup_loguru('{}.log'.format(file_name), level=log_level, label='django')
+    setup_logging('{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='django')
+    setup_logging('{}.django.log'.format(file_name), 'django', level=log_level, label='django')
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     # 启动django
     django_args_list = [item.strip() for item in django_args.split(' ') if item.strip()]

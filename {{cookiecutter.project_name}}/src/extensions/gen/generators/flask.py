@@ -28,9 +28,9 @@ ioc.run(scan_package_names='{{cookiecutter.package_name}}',
         )
 
 # 设置日志文件
-setup_loguru('flask_{{ cookiecutter.project_name }}.log', label='flask')
-setup_logging('flask_{{ cookiecutter.project_name }}.sqlalchemy.log', 'sqlalchemy', label='flask')
-setup_uvicorn('flask_{{ cookiecutter.project_name }}.uvicorn.log', label='flask')
+setup_loguru('{{ cookiecutter.project_name }}.log', label='flask')
+setup_logging('{{ cookiecutter.project_name }}.sqlalchemy.log', 'sqlalchemy', label='flask')
+setup_uvicorn('{{ cookiecutter.project_name }}.uvicorn.log', label='flask')
 app = Flask(__name__)
 
 
@@ -97,9 +97,9 @@ def main(project_dir: Optional[str] = None,
             exclude_modules=[],
             )
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup_loguru('flask_{}.log'.format(file_name), level=log_level, label='flask')
-    setup_logging('flask_{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='flask')
-    setup_uvicorn('flask_{}.uvicorn.log'.format(file_name), level=log_level, label='flask')
+    setup_loguru('{}.log'.format(file_name), level=log_level, label='flask')
+    setup_logging('{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='flask')
+    setup_uvicorn('{}.uvicorn.log'.format(file_name), level=log_level, label='flask')
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers, reload=reload)
 
