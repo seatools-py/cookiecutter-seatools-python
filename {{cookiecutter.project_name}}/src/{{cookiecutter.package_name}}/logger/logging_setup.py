@@ -5,13 +5,14 @@ from {{cookiecutter.package_name}}.utils import get_log_path
 from {{cookiecutter.package_name}}.config import cfg
 
 
-def setup_sqlalchemy(file_name,
-                     rotation_type: str = 'd',
-                     rotation: int = 1,
-                     serialize: bool = True,
-                     retention_count: int = 3,
-                     level: str = 'INFO',
-                     label=''):
+def setup_logging(file_name,
+                  logger_name,
+                  rotation_type: str = 'd',
+                  rotation: int = 1,
+                  serialize: bool = True,
+                  retention_count: int = 3,
+                  level: str = 'INFO',
+                  label=''):
     """ 设置sqlalchemy日志记录, 与loguru相同的日志格式 """
     # 开启序列化则注入
     if serialize:
@@ -26,7 +27,8 @@ def setup_sqlalchemy(file_name,
             encoding='utf-8',
         )
 
-        file_handler.setFormatter(formatter_cls('%(message)s', extra={'service_name': cfg().project_name, 'label': label}))
+        file_handler.setFormatter(
+            formatter_cls('%(message)s', extra={'service_name': cfg().project_name, 'label': label}))
         file_handler.addFilter(lambda e: e.levelno >= logging._nameToLevel[level])
-        logging_logger = logging.getLogger('sqlalchemy')
+        logging_logger = logging.getLogger(logger_name)
         logging_logger.addHandler(file_handler)

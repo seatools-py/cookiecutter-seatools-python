@@ -17,7 +17,7 @@ from uvicorn.middleware.wsgi import WSGIMiddleware
 from {{ cookiecutter.package_name }}.config import get_config_dir
 from seatools import ioc
 import os
-from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_uvicorn, setup_sqlalchemy
+from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_uvicorn, setup_logging
 from loguru import logger
 
 # 运行ioc
@@ -29,7 +29,7 @@ ioc.run(scan_package_names='{{cookiecutter.package_name}}',
 
 # 设置日志文件
 setup_loguru('flask_{{ cookiecutter.project_name }}.log', label='flask')
-setup_sqlalchemy('flask_{{ cookiecutter.project_name }}.sqlalchemy.log', label='flask')
+setup_logging('flask_{{ cookiecutter.project_name }}.sqlalchemy.log', 'sqlalchemy', label='flask')
 setup_uvicorn('flask_{{ cookiecutter.project_name }}.uvicorn.log', label='flask')
 app = Flask(__name__)
 
@@ -54,7 +54,7 @@ import multiprocessing
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg, get_config_dir
-from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn, setup_sqlalchemy
+from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn, setup_logging
 from {{ cookiecutter.package_name }} import utils
 from typing import Optional
 from seatools import ioc
@@ -98,7 +98,7 @@ def main(project_dir: Optional[str] = None,
             )
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
     setup_loguru('flask_{}.log'.format(file_name), level=log_level, label='flask')
-    setup_sqlalchemy('flask_{}.sqlalchemy.log'.format(file_name), level=log_level, label='flask')
+    setup_logging('flask_{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='flask')
     setup_uvicorn('flask_{}.uvicorn.log'.format(file_name), level=log_level, label='flask')
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers, reload=reload)
