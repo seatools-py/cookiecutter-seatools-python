@@ -355,10 +355,11 @@ class ${class_name}Spider(scrapy.Spider):
     allowed_domains = ["${domain}"]
     start_urls = ["https://${domain}"]
 
-    def __init__(self, seatools_file_name=None, seatools_log_level=None, **kwargs: Any):
+    def __init__(self, seatools_file_name=None, seatools_log_level='INFO', **kwargs: Any):
         super().__init__(**kwargs)
-        setup_logging('{}.scrapy.log'.format(seatools_file_name), 'scrapy', level=seatools_log_level, label='${name}')
-        setup_logging('{}.scrapy.{}.log'.format(seatools_file_name, self.name), self.name, level=seatools_log_level, label='${name}')
+        if seatools_file_name:
+            setup_logging('{}.scrapy.log'.format(seatools_file_name), 'scrapy', level=seatools_log_level, label='${name}')
+            setup_logging('{}.scrapy.{}.log'.format(seatools_file_name, self.name), self.name, level=seatools_log_level, label='${name}')
 
     def parse(self, response: Response, **kwargs: Any) -> Any:
         pass
