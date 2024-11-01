@@ -6,3 +6,4 @@ log_dir: ./logs
 sqlalchemy:
   # sql记录
   echo: true
+  pool_recycle: 3600
