@@ -148,7 +148,7 @@ docker-compose up -d hello
 2. 安装相关依赖: `poetry add scrapy`
 - 生成xxx爬虫: `poetry run gen scrapy genspider {name} {domain}`, 该命令生成的Spider在`src/{{ cookiecutter.package_name}}/scrapy/spiders`下, 同时会生成可执行的cmd文件`src/{{ cookiecutter.package_name}}/cmd/{name}.py`
 - 执行xxx爬虫: `poetry run {name} --env [dev|test|pro]`, 部署执行`bash bin/{name}.sh` 或者`docker`执行, 具体参考上文`新增 CMD 命令`
-3. 使用其他的scrapy命令 `poetry run scrapy {crawl|genspider|...} ...`
+3. 使用其他的scrapy命令 `poetry run scrapy {shell|...} ...`
 
 ## Chrome 配置
 1. 查询`chrome`/`chromedriver`版本: `poetry run chrome list`
