@@ -10,7 +10,7 @@ class CommonDBConfig(BaseModel):
     password: Optional[str] = None
     db: Optional[str] = None
     # sqlalchemy的schema, 仅使用sqlalchemy需要配置, 例如:sqlite, mysql+pymysql等等
-    sqlalchemy_schema: Optional[str] = None
+    orm_schema: Optional[str] = None
     # 是否是async连接
     is_async: Optional[bool] = False
     # 是否是ioc primary实例
@@ -19,12 +19,12 @@ class CommonDBConfig(BaseModel):
 
 class SqliteConfig(CommonDBConfig):
     """Sqlite 配置"""
-    sqlalchemy_schema: Optional[str] = 'sqlite'
+    orm_schema: Optional[str] = 'sqlite'
 
 
 class AsyncSqliteConfig(CommonDBConfig):
     """Sqlite async配置"""
-    sqlalchemy_schema: Optional[str] = 'sqlite+aiosqlite'
+    orm_schema: Optional[str] = 'sqlite+aiosqlite'
     is_async: Optional[bool] = True
 
 
@@ -33,7 +33,7 @@ class MysqlConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 3306
     user: Optional[str] = 'root'
-    sqlalchemy_schema: Optional[str] = 'mysql+pymysql'
+    orm_schema: Optional[str] = 'mysql+pymysql'
 
 
 class AsyncMysqlConfig(CommonDBConfig):
@@ -41,7 +41,7 @@ class AsyncMysqlConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 3306
     user: Optional[str] = 'root'
-    sqlalchemy_schema: Optional[str] = 'mysql+aiomysql'
+    orm_schema: Optional[str] = 'mysql+aiomysql'
     is_async: Optional[bool] = True
 
 
@@ -50,7 +50,7 @@ class PostgresqlConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 5432
     user: Optional[str] = 'root'
-    sqlalchemy_schema: Optional[str] = 'postgresql+psycopg2'
+    orm_schema: Optional[str] = 'postgresql+psycopg2'
 
 
 class AsyncPostgresqlConfig(CommonDBConfig):
@@ -58,7 +58,7 @@ class AsyncPostgresqlConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 5432
     user: Optional[str] = 'root'
-    sqlalchemy_schema: Optional[str] = 'postgresql+asyncpg'
+    orm_schema: Optional[str] = 'postgresql+asyncpg'
     is_async: Optional[bool] = True
 
 
@@ -72,14 +72,14 @@ class HiveConfig(CommonDBConfig):
     """Hive 配置"""
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 10000
-    sqlalchemy_schema: Optional[str] = 'hive'
+    orm_schema: Optional[str] = 'hive'
 
 
 class ImpylaConfig(CommonDBConfig):
     """Impala 配置"""
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 21050
-    sqlalchemy_schema: Optional[str] = 'impala'
+    orm_schema: Optional[str] = 'impala'
 
 
 class ClickhouseConfig(CommonDBConfig):
@@ -87,7 +87,7 @@ class ClickhouseConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 8123
     user: Optional[str] = 'root'
-    sqlalchemy_schema: Optional[str] = 'clickhouse'
+    orm_schema: Optional[str] = 'clickhouse'
 
 
 class SqlalchemyConfig(BaseModel):
