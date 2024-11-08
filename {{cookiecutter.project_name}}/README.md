@@ -139,7 +139,7 @@ docker-compose up -d hello
 
 ## Django 配置
 1. 生成模板代码: `poetry run gen django`
-2. 安装相关依赖: `poetry add django==4.2.11` (由于django>=5.0需要python>=3.10, 若要安装django5.x版本需要修改pyproject.toml中的python版本限制)
+2. 安装相关依赖: `poetry add django==4.2.11` (由于django>=5.0需要python>=3.10, 若要安装django5.x版本需要修改`pyproject.toml`中的`python = ">=3.9, <3.13"`改成`python = ">=3.10, <3.13"`然后`poetry lock`后再安装即可)
 3. 运行 `poetry run django --django_args "runserver"`, 对应 `src/{{ cookiecutter.package_name}}/cmd/django_main.py`
 4. 其他django命令用法: `poetry run django --django_args "{runserver|createsuperuser|migrate|...} ..."`
 
