@@ -42,7 +42,7 @@ def flask(override: Optional[bool] = False):
 @click.option('--override', is_flag=True, default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
 @click.option('--task_class', '--class', default=None, help='任务类名, 支持驼峰、下划线名称解析, 生成的文件名下划线分隔, 类名驼峰, 例如: HelloWorld, 生成task模板时必填该参数')
 @click.option('--task_name', '--name', default="默认任务", help='任务名称, 中英文任务描述, 默认值: 默认任务')
-@click.option('--async', is_flag=True, default=False, help='是否创建异步任务, 默认false')
+@click.option('--is_async', '--async', is_flag=True, default=False, help='是否创建异步任务, 默认false')
 @click.version_option(version="1.0.0", help='查看命令版本')
 @click.help_option('-h', '--help', help='查看命令帮助')
 def task(override: Optional[bool] = False,
