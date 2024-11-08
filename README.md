@@ -28,6 +28,7 @@
     2. 生成自定义命令行入口, 生成命令行模板、执行脚本以及docker相关部署脚本 
     3. 生成`web`(`fastapi`, `flask`, `django`)、`scrapy`模板代码
     4. 下载`chrome`、`chromedriver`环境，支持自选浏览器版本、系统
+13. grpc拓展
 
 ### 部署打包支持
 1. 支持 `windows`, `linux`, `mac` 多平台的`python`环境运行或使用`pyinstaller`打包后运行

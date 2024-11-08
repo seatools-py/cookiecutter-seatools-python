@@ -146,8 +146,9 @@ docker-compose up -d hello
 
 ## Grpc 配置
 1. 在`src`目录下新建`proto`目录编写`*.proto`文件
-2. 生成模板及pb2文件命令: `poetry run gen grpc --pyi` (其中`--pyi`参数非必须, 不传该参数将不会生成对应的`.pyi`文件)
-3. 生成的代码均在`src/{{cookiecutter.package_name}}/grpc`下, 建议grpc相关依赖逻辑在该包下完成, `pb2`文件在`src/{{cookiecutter.package_name}}/grpc/proto`包下
+2. 安装相关依赖: `poetry add grpcio grpcio-tools`
+3. 生成模板及pb2文件命令: `poetry run gen grpc --pyi` (其中`--pyi`参数非必须, 不传该参数将不会生成对应的`.pyi`文件)
+4. 生成的代码均在`src/{{cookiecutter.package_name}}/grpc`下, 建议grpc相关依赖逻辑在该包下完成, `pb2`文件在`src/{{cookiecutter.package_name}}/grpc/proto`包下
 
 ## Scrapy 配置
 1. 生成模板代码: `poetry run gen scrapy init`
