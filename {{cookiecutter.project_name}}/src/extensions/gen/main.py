@@ -1,3 +1,4 @@
+import os
 import click
 from loguru import logger
 from typing import Optional
@@ -111,6 +112,31 @@ def cmd(name: str, label: Optional[str] = None, override: Optional[bool] = False
     project_dir = get_project_dir()
     package_dir = get_package_dir()
     generate_cmd(project_dir=project_dir, package_dir=package_dir, override=override, command=name, label=label)
+
+
+@main.command()
+@click.option("--name", default=None, help='protobuf文件名称, proto文件仅支持在src/proto目录下, 例如存在xxx.proto, 则name应该传递xxx, 若不传递该参数, 则默认将src/proto目录下所有proto文件一起生成')
+@click.option("--pyi", is_flag=True, default=False, help='是否生成pyi文件, 默认false不生成')
+@click.option('--override', is_flag=True, default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def grpc(name: Optional[str] = None, pyi: Optional[bool] = False, override: Optional[bool] = False):
+    project_dir = get_project_dir()
+    package_dir = get_package_dir()
+    proto_dir = get_project_dir() + os.sep + 'src' + os.sep + 'proto'
+    if not os.path.exists(proto_dir):
+        logger.error("proto目录[{}]不存在, 无法生成pb2代码".format(proto_dir))
+        return
+    if not name:
+        import glob
+        names = [file.replace('.proto', '').split(os.sep)[-1] for file in glob.glob(os.path.join(proto_dir, '*.proto'))]
+    else:
+        names = [name]
+
+    for name in names:
+        generate_grpc(project_dir, package_dir, override, name, pyi=pyi)
+        # 仅第一次需要override, 防止多次重复override
+        override = False
 
 
 if __name__ == "__main__":
