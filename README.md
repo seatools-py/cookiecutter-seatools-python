@@ -2,7 +2,12 @@
 
 ## 项目地址:
 1. https://github.com/seatools-py/cookiecutter-seatools-python
-2. https://gitee.com/seatools-py/cookiecutter-seatools-python,
+2. https://gitee.com/seatools-py/cookiecutter-seatools-python
+
+## Seatools 工具包地址
+1. https://github.com/seatools-py/seatools
+2. https://gitee.com/seatools-py/seatools
+
 
 ## 使用方法
 1. 安装python3.9+ (省略)
