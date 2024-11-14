@@ -13,7 +13,7 @@ if [ ! -d "$PROJECT_DIR/venv" ]; then
     echo "切换虚拟环境"
     source venv/bin/activate
     echo "开始安装poetry"
-    pip3 install poetry
+    pip3 install poetry -i https://pypi.tuna.tsinghua.edu.cn/simple
     echo "poetry安装完成"
     echo "开始更新poetry lock"
     poetry lock
