@@ -12,9 +12,8 @@
 ## 使用方法
 1. 安装python3.9+ (省略)
 2. 安装cookiecutter: `pip install cookiecutter`
-3. 使用该模板生成项目: `cookiecutter git@gitee.com:dragons96/cookiecutter-seatools-python.git`
+3. 使用该模板生成项目: `cookiecutter git@gitee.com:seatools-py/cookiecutter-seatools-python.git`
 4. 通过观看生成项目的`README.md`文件查看相关操作与使用方式
-5. 当前主分支默认为`ioc`版本, 若使用普通版本请使用`cookiecutter -c normal git@gitee.com:dragons96/cookiecutter-seatools-python.git`创建项目
 
 
 ## cookiecutter-seatools-python 是什么？
