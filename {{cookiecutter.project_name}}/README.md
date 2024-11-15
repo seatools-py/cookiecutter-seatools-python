@@ -258,6 +258,7 @@ sqlacodegen mysql://root:123456@127.0.0.1:3306/test_db --outfile ./src/{{cookiec
 3. 执行脚本 `sh bin/main.sh` 或其他自定义命令运行项目
 
 ## 打包
+PS: `ioc` 模式需要额外添加相关依赖, 待更新
 ### 一、使用pyinstaller打包
 安装 `poetry add -D pyinstaller`
 #### 1. 打包普通命令行任务
