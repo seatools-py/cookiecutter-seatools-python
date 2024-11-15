@@ -20,7 +20,7 @@
 ### 一个基于 `cookiecutter` 的 `python` 项目模板, 项目基于 `poetry` 与 python集成工具包 [`seatools`](https://gitee.com/dragons96/seatools.git), 支持如下功能:
 1. cmd工具(基于`click`)
 2. web服务(可任选`fastapi`, `flask`, `django`)
-3. 数据库(支持`sqlalchemy`+[`mysql`|`postgresql`|`clickhouse`|`hive`|`impala`], 提供`sqlalchemy`便捷操作工具)
+3. 数据库(支持`sqlalchemy`+[`mysql`|`postgresql`|`clickhouse`|`hive`|`impala`|...], 提供`sqlalchemy`便捷操作工具)
 4. Redis(支持`redis`, `redis-om`, 对`reids-om`提供部分适配)
 5. 爬虫(支持`scrapy`, [`undetected-chromedriver`(基于selenium的抹除指纹自动化框架)](https://github.com/ultrafunkamsterdam/undetected-chromedriver))
 6. 缓存(基于`cache_tools`)
