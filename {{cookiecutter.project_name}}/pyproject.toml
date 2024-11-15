@@ -33,6 +33,7 @@ contextvars = ">=2.4"
 colorama = ">=0.4.6"
 tqdm = ">=4.66.5"
 seatools-codegen = ">=1.0.0"
+seatools-chrome = ">=1.0.0"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"

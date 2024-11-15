@@ -1,8 +1,9 @@
 import click
 from typing import Optional
-from {{ cookiecutter.package_name }}.config import get_project_dir, get_package_dir
-from .chrome import list_chrome, common_download_chrome
-from colorama import Fore
+from {{ cookiecutter.package_name }}.config import get_project_dir, get_package_dir, get_extensions_dir
+from seatools.ext.chrome import list_chrome, common_download_chrome
+from loguru import logger
+from demo_seatools.utils import get_absolute_path
 
 __allow_system__ = ["linux64", "mac-arm64", "mac-x64", "win64", "win32"]
 __allow_type__ = ['chrome', 'chromedriver', 'all']
@@ -23,7 +24,7 @@ def main() -> None:
 def list(grep: Optional[str] = None):
     project_dir = get_project_dir()
     package_dir = get_package_dir()
-    print(Fore.LIGHTGREEN_EX + '\n'.join([item for item in list_chrome(project_dir=project_dir, package_dir=package_dir) if not grep or grep in item]))
+    logger.success('\n'.join([item for item in list_chrome(project_dir=project_dir, package_dir=package_dir) if not grep or grep in item]))
 
 
 @main.command()
@@ -36,18 +37,22 @@ def download(version: Optional[str] = None,
              system: Optional[str] = 'win64',
              type: Optional[str] = 'chromedriver'):
     if not version:
-        print(Fore.LIGHTRED_EX + '版本不能为空')
+        logger.error('版本不能为空')
+        exit(1)
     if system not in __allow_system__:
-        print(Fore.LIGHTRED_EX + '系统[{}]不支持, 请使用-h参数查看支持的系统类型'.format(system))
+        logger.error('系统[{}]不支持, 请使用-h参数查看支持的系统类型'.format(system))
         exit(1)
     if type not in __allow_type__:
-        print(Fore.LIGHTRED_EX + '类型[{}]不支持, 请使用-h参数查看支持的系统类型'.format(type))
+        logger.error('类型[{}]不支持, 请使用-h参数查看支持的系统类型'.format(type))
         exit(1)
     project_dir = get_project_dir()
     package_dir = get_package_dir()
+    installer_dir = get_absolute_path(get_extensions_dir())
     if type in ('chrome', 'all'):
         common_download_chrome(project_dir=project_dir, package_dir=package_dir,
-                               version=version, system=system, type_='chrome')
+                               version=version, system=system, type_='chrome',
+                               installer_dir=installer_dir)
     if type in ('chromedriver', 'all'):
         common_download_chrome(project_dir=project_dir, package_dir=package_dir,
-                               version=version, system=system, type_='chromedriver')
+                               version=version, system=system, type_='chromedriver',
+                               installer_dir=installer_dir)
