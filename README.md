@@ -13,7 +13,7 @@
 1. 安装python3.9+ (省略)
 2. 安装cookiecutter: `pip install cookiecutter`
 3. 使用该模板生成项目: `cookiecutter git@gitee.com:seatools-py/cookiecutter-seatools-python.git`
-4. 通过观看生成项目的`README.md`文件查看相关操作与使用方式
+4. 通过查看生成项目的`README.md`文件了解具体操作与使用方式
 
 
 ## cookiecutter-seatools-python 是什么？
