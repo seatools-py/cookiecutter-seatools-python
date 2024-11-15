@@ -26,7 +26,7 @@
 3. 推荐使用自定义`Model`(继承`seatools.models.BaseModel`) 代替各种`dict`字典, 业务上频繁使用`dict`不直观难以维护
 
 ### 任务类脚本
-1. 执行生成任务命令, `poetry run gen task --task_class DemoTask --task_name 示例任务`, 将会生成`src/{{cookiecutter.package_name}}/tasks/demo_task.py`文件, 此处编写任务逻辑
+1. 执行生成任务命令, `poetry run gen task --class DemoTask --name 示例任务`, 将会生成`src/{{cookiecutter.package_name}}/tasks/demo_task.py`文件, 此处编写任务逻辑
 2. 执行生成CMD命令, `poetry run gen cmd --name demo`, 将会在`src/{{cookiecutter.package_name}}/cmd/demo_main.py`文件, 此处编写命令逻辑
 3. 编辑`src/{{cookiecutter.package_name}}/tasks/demo_task.py`任务文件:
 ```python
@@ -189,7 +189,8 @@ docker-compose up -d hello
 9. `src/{{cookiecutter.package_name}}/config.py`: 配置工具, 通过该工具可获取配置信息
 10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作
 11. `src/{{cookiecutter.package_name}}/logger/*`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
-12. `tests/`: 测试代码
+12. `src/{{cookiecutter.package_name}}/decorators`: 装饰器工具包
+13. `tests/`: 测试代码
 
 ## 功能说明
 ### 1.配置管理
