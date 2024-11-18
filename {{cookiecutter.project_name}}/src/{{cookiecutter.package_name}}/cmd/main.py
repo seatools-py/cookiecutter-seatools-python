@@ -14,11 +14,13 @@ from typing import Optional
 @click.option('--env', default='dev', help='运行环境, dev=测试环境, test=测试环境, pro=正式环境, 默认: dev')
 @click.option('--log_level', default='INFO',
               help='日志级别, DEBUG=调试, INFO=信息, WARNING=警告, ERROR=错误, CRITICAL=严重, 默认: INFO')
+@click.option('--label', default='main', help='日志标签, 默认: main')
 @click.version_option(version="1.0.0", help='查看命令版本')
 @click.help_option('-h', '--help', help='查看命令帮助')
 def main(project_dir: Optional[str] = None,
          env: Optional[str] = 'dev',
-         log_level: Optional[str] = 'INFO') -> None:
+         log_level: Optional[str] = 'INFO',
+         label: Optional[str] = 'main') -> None:
     """{{cookiecutter.friendly_name}} cmd."""
     # 如果是pyinstaller环境, 先把当前路径设置为执行路径, 以便于无参运行
     if utils.is_pyinstaller_env():
@@ -27,6 +29,8 @@ def main(project_dir: Optional[str] = None,
         os.environ['PROJECT_DIR'] = project_dir
     if env:
         os.environ['ENV'] = env
+    if label:
+        os.environ['LABEL'] = label
     # 运行ioc
     ioc.run(scan_package_names='{{cookiecutter.package_name}}',
             config_dir=get_config_dir(),
@@ -36,7 +40,7 @@ def main(project_dir: Optional[str] = None,
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
     setup_loguru('{}.log'.format(file_name), level=log_level, label='main')
     # 设置日志sqlalchemy
-    setup_logging('{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label='main')
+    setup_logging('{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label=label)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
 
 
