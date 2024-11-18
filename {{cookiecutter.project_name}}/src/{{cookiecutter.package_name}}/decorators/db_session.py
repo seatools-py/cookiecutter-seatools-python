@@ -86,7 +86,7 @@ def auto_session(db: Optional[str] = None, field_name: Optional[str] = 'session'
                 import redis
                 cli = Autowired(db, cls=redis.Redis)
                 return await do_async_func(func, session=cli, *args, **kwargs)
-            except ImportError:
+            except ImportError as e:
                 raise e
 
         @functools.wraps(func)
@@ -106,7 +106,7 @@ def auto_session(db: Optional[str] = None, field_name: Optional[str] = 'session'
                 import redis
                 cli = Autowired(db, cls=redis.Redis)
                 return do_func(func, session=cli, *args, **kwargs)
-            except ImportError:
+            except ImportError as e:
                 raise e
 
         if asyncio.iscoroutinefunction(func):
@@ -156,7 +156,7 @@ def new_session(db: Union[str, CommonDBConfig] = None, field_name: Optional[str]
                 import redis
                 cli = Autowired(db, cls=redis.Redis)
                 return await func(func, session=cli, *args, **kwargs)
-            except ImportError:
+            except ImportError as e:
                 raise e
 
         @functools.wraps(func)
@@ -172,7 +172,7 @@ def new_session(db: Union[str, CommonDBConfig] = None, field_name: Optional[str]
                 import redis
                 cli = Autowired(db, cls=redis.Redis)
                 return func(func, session=cli, *args, **kwargs)
-            except ImportError:
+            except ImportError as e:
                 raise e
 
         if asyncio.iscoroutinefunction(func):
