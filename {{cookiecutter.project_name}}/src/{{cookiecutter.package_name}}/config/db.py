@@ -1,6 +1,8 @@
 from seatools.ioc import Bean, get_environment
-from {{cookiecutter.package_name}}.models.config import MultiDBConfig, CommonDBConfig
-from {{cookiecutter.package_name}}.db import db_select
+from seatools.sqlalchemy.dbconfig import CommonDBConfig
+from seatools.sqlalchemy.utils import new_client
+from {{cookiecutter.package_name}}.models.config import MultiDBConfig
+from {{cookiecutter.package_name}}.config import cfg
 from loguru import logger
 from typing import get_args
 import inspect
@@ -19,5 +21,5 @@ def init_db_beans():
             logger.warning('DB配置[{}]未继承CommonDBConfig类, 无法自动注入db实例')
             continue
         # 注册bean
-        client = db_select(config)
+        client = new_client(config, cfg().sqlalchemy)
         Bean(name=attr_name, primary=config.primary)(client)

@@ -185,11 +185,11 @@ docker-compose up -d hello
 7. `src/{{cookiecutter.package_name}}/extensions/`: 拓展包
 8. `src/{{cookiecutter.package_name}}/extensions/gen`: 代码生成器
 9. `src/{{cookiecutter.package_name}}/extensions/chrome`: chrome/chromedriver下载器
-8. `src/{{cookiecutter.package_name}}/models`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
-9. `src/{{cookiecutter.package_name}}/config.py`: 配置工具, 通过该工具可获取配置信息
-10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作
+8. `src/{{cookiecutter.package_name}}/models/`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
+9. `src/{{cookiecutter.package_name}}/config/`: 配置工具, 通过该工具可获取配置信息(包括项目路径, 配置对象等)
+~~10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作~~ 使用`seatools.sqlalchemy.utils`代替
 11. `src/{{cookiecutter.package_name}}/logger/*`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
-12. `src/{{cookiecutter.package_name}}/decorators`: 装饰器工具包
+~~12. `src/{{cookiecutter.package_name}}/decorators`: 装饰器工具包~~ 使用`seatools.sqlalchemy.decorators.ioc`代替
 13. `tests/`: 测试代码
 
 ## 功能说明
@@ -209,6 +209,8 @@ print(cfg().project_name)
 ```python
 # 省略无用代码
 ...
+from seatools.sqlalchemy.dbconfig import MysqlConfig
+
 
 class MultiDBConfig(BaseModel):
     """多 DB 配置"""
@@ -232,11 +234,46 @@ db:
 ```
 3. 操作数据库:
 ```python
-from {{ cookiecutter.package_name }}.db import db_select
+from seatools import ioc
+from seatools.sqlalchemy.utils import new_client
 from sqlalchemy import text
+from {{ cookiecutter.package_name }}.config import cfg, get_config_dir
 
-# db_select的参数与上面配置的名称, MultiDBConfig 中的变量名都要保持一致
-with db_select('mysql_test_db').session() as session:
+# 启动 ioc
+ioc.run(
+    scan_package_names='{{cookiecutter.package_name}}',
+    config_dir=get_config_dir(),
+    exclude_modules=[],
+)
+
+"""
+推荐方式, 装饰器
+auto_session 与 new_session区别
+
+auto_session: 同一线程和同一协程中session保持一致性
+new_session: 每次都是新建一个session
+"""
+from seatools.sqlalchemy.decorators.ioc import auto_session, new_session
+from sqlalchemy.orm import Session
+
+
+@auto_session(db="mysql_test_db") # 名称与配置一致, 只有一个db或者primary=true可省略 @auto_session() 或 @auto_session
+def xxx(session: Session):
+    data = session.execute(text('select 1')).all()
+
+# 调用
+xxx()
+
+
+@new_session(db="mysql_test_db") # 名称与配置一致, 只有一个db或者primary=true可省略 @auto_session() 或 @auto_session
+def yyy(session: Session):
+    data = session.execute(text('select 1')).all()
+
+# 调用
+yyy()
+
+# new_client的参数为配置属性与sqlalchemy配置 该方式不再推荐
+with new_client(cfg().db.mysql_test_db, cfg().sqlalchemy).session() as session:
     # 这里获取的session对象就是 sqlalchemy 的 session 对象, 按照sqlalchemy 的 session 使用方式操作数据库即可
     data = session.execute(text('select 1')).all()
 ```

@@ -1,106 +1,13 @@
 from typing import Optional
 from seatools.models import BaseModel
-
-
-class CommonDBConfig(BaseModel):
-    """通用 DB 配置"""
-    host: Optional[str] = None
-    port: Optional[int] = None
-    user: Optional[str] = None
-    password: Optional[str] = None
-    db: Optional[str] = None
-    # sqlalchemy的schema, 仅使用sqlalchemy需要配置, 例如:sqlite, mysql+pymysql等等
-    orm_schema: Optional[str] = None
-    # 是否是async连接
-    is_async: Optional[bool] = False
-    # 是否是ioc primary实例
-    primary: Optional[bool] = False
-
-
-class SqliteConfig(CommonDBConfig):
-    """Sqlite 配置"""
-    orm_schema: Optional[str] = 'sqlite'
-
-
-class AsyncSqliteConfig(CommonDBConfig):
-    """Sqlite async配置"""
-    orm_schema: Optional[str] = 'sqlite+aiosqlite'
-    is_async: Optional[bool] = True
-
-
-class MysqlConfig(CommonDBConfig):
-    """Mysql 配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 3306
-    user: Optional[str] = 'root'
-    orm_schema: Optional[str] = 'mysql+pymysql'
-
-
-class AsyncMysqlConfig(CommonDBConfig):
-    """Mysql async配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 3306
-    user: Optional[str] = 'root'
-    orm_schema: Optional[str] = 'mysql+aiomysql'
-    is_async: Optional[bool] = True
-
-
-class PostgresqlConfig(CommonDBConfig):
-    """postgresql 配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 5432
-    user: Optional[str] = 'root'
-    orm_schema: Optional[str] = 'postgresql+psycopg2'
-
-
-class AsyncPostgresqlConfig(CommonDBConfig):
-    """postgresql async配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 5432
-    user: Optional[str] = 'root'
-    orm_schema: Optional[str] = 'postgresql+asyncpg'
-    is_async: Optional[bool] = True
-
-
-class RedisConfig(CommonDBConfig):
-    """Redis 配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 6379
-    user: Optional[str] = ''
-    orm_schema: Optional[str] = 'redis'
-
-
-class HiveConfig(CommonDBConfig):
-    """Hive 配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 10000
-    orm_schema: Optional[str] = 'hive'
-
-
-class ImpylaConfig(CommonDBConfig):
-    """Impala 配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 21050
-    orm_schema: Optional[str] = 'impala'
-
-
-class ClickhouseConfig(CommonDBConfig):
-    """Clickhouse 配置"""
-    host: Optional[str] = '127.0.0.1'
-    port: Optional[int] = 8123
-    user: Optional[str] = 'root'
-    orm_schema: Optional[str] = 'clickhouse'
-
-
-class SqlalchemyConfig(BaseModel):
-    """sqlalchemy相关配置"""
-    echo: Optional[bool] = True
-    # 连接池回收周期
-    pool_recycle: Optional[int] = -1
+from seatools.sqlalchemy.dbconfig import SqlalchemyConfig
 
 
 class MultiDBConfig(BaseModel):
-    """多 DB 配置"""
+    """多 DB 配置
+
+    引入 seatools.sqlalchemy.dbconfig 中的各种数据库配置类型属性, 并在application[-[dev|test|pro]].yml文件中添加相应配置
+    """
 
 
 class Config(BaseModel):
@@ -108,4 +15,5 @@ class Config(BaseModel):
     project_name: Optional[str] = 'undefined_project_name'
     log_dir: Optional[str] = './logs'
     db: Optional[MultiDBConfig] = MultiDBConfig()
+    # 如需拓展sqlalchemy配置属性只需要定义新类型继承seatools.sqlalchemy.dbconfig.SqlalchemyConfig添加额外属性, 并修改此处类型和配置文件即可
     sqlalchemy: Optional[SqlalchemyConfig] = SqlalchemyConfig()
