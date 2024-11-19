@@ -3,7 +3,7 @@ from typing import Optional
 from {{ cookiecutter.package_name }}.config import get_project_dir, get_package_dir, get_extensions_dir
 from seatools.ext.chrome import list_chrome, common_download_chrome
 from loguru import logger
-from demo_seatools.utils import get_absolute_path
+from {{ cookiecutter.package_name }}.utils import get_absolute_path
 
 __allow_system__ = ["linux64", "mac-arm64", "mac-x64", "win64", "win32"]
 __allow_type__ = ['chrome', 'chromedriver', 'all']
