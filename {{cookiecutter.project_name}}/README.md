@@ -26,8 +26,8 @@
 3. 推荐使用自定义`Model`(继承`seatools.models.BaseModel`) 代替各种`dict`字典, 业务上频繁使用`dict`不直观难以维护
 
 ### 任务类脚本
-1. 执行生成任务命令, `poetry run gen task --class DemoTask --name 示例任务`, 将会生成`src/{{cookiecutter.package_name}}/tasks/demo_task.py`文件, 此处编写任务逻辑
-2. 执行生成CMD命令, `poetry run gen cmd --name demo`, 将会在`src/{{cookiecutter.package_name}}/cmd/demo_main.py`文件, 此处编写命令逻辑
+1. 执行生成任务命令, `seatools-codegen task --class DemoTask --name 示例任务`, 将会生成`src/{{cookiecutter.package_name}}/tasks/demo_task.py`文件, 此处编写任务逻辑
+2. 执行生成CMD命令, `seatools-codegen cmd --name demo`, 将会在`src/{{cookiecutter.package_name}}/cmd/demo_main.py`文件, 此处编写命令逻辑
 3. 编辑`src/{{cookiecutter.package_name}}/tasks/demo_task.py`任务文件:
 ```python
 ... # 省略
@@ -84,7 +84,7 @@ poetry run pyinstaller --onefile "./src/{{cookiecutter.package_name}}/cmd/demo_m
 ```
 
 ### Web服务 (以fastapi为例)
-1. 执行生成`fastapi`代码命令, `poetry run gen fastapi`
+1. 执行生成`fastapi`代码命令, `seatools-codegen fastapi`
 2. fastapi相关组件位于 `src/{{cookiecutter.package_name}}/fastapi/`, 入口CMD位于`src/{{cookiecutter.package_name}}/cmd/fastapi_main.py`
 3. 启动项目: `poetry run fastapi`
 4. 访问`http://localhost:8000`, 返回`Hello {{ cookiecutter.project_name }} by FastAPI!` 则说明运行成功
@@ -110,9 +110,9 @@ bash bin/demo.sh
 
 ## 新增 CMD 命令
 该操作会生成基于`poetry`的CMD命令, sh脚本, Dockerfile配置, docker-compose配置
-1. 生成`poetry`命令: `poetry run gen cmd --name {name}`, 示例如下:
+1. 生成`poetry`命令: `seatools-codegen cmd --name {name}`, 示例如下:
 ```shell
-poetry run gen cmd --name hello
+seatools-codegen cmd --name hello
 
 # 将会在 src/{{ cookiecutter.package_name }}/cmd 目录下生成 hello_main.py 文件
 
@@ -128,17 +128,17 @@ docker-compose up -d hello
 ```
 
 ## FastAPI 配置
-1. 生成模板代码: `poetry run gen fastapi`
+1. 生成模板代码: `seatools-codegen fastapi`
 2. 安装相关依赖: `poetry add fastapi uvicorn[standard]`
 3. 运行 `poetry run fastapi`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
 
 ## Flask 配置
-1. 生成模板代码: `poetry run gen flask`
+1. 生成模板代码: `seatools-codegen flask`
 2. 安装相关依赖: `poetry add flask uvicorn[standard]`
 3. 运行 `poetry run flask`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
 
 ## Django 配置
-1. 生成模板代码: `poetry run gen django`
+1. 生成模板代码: `seatools-codegen django`
 2. 安装相关依赖: `poetry add django==4.2.11` (由于django>=5.0需要python>=3.10, 若要安装django5.x版本需要修改`pyproject.toml`中的`python = ">=3.9, <3.13"`改成`python = ">=3.10, <3.13"`然后`poetry lock`后再安装即可)
 3. 运行 `poetry run django --django_args "runserver"`, 对应 `src/{{ cookiecutter.package_name}}/cmd/django_main.py`
 4. 其他django命令用法: `poetry run django --django_args "{runserver|createsuperuser|migrate|...} ..."`
@@ -147,13 +147,13 @@ docker-compose up -d hello
 ## Grpc 配置
 1. 在`src`目录下新建`proto`目录编写`*.proto`文件
 2. 安装相关依赖: `poetry add grpcio grpcio-tools`
-3. 生成模板及pb2文件命令: `poetry run gen grpc --pyi` (其中`--pyi`参数非必须, 不传该参数将不会生成对应的`.pyi`文件)
+3. 生成模板及pb2文件命令: `seatools-codegen grpc --pyi` (其中`--pyi`参数非必须, 不传该参数将不会生成对应的`.pyi`文件)
 4. 生成的代码均在`src/{{cookiecutter.package_name}}/grpc`下, 建议grpc相关依赖逻辑在该包下完成, `pb2`文件在`src/{{cookiecutter.package_name}}/grpc/proto`包下
 
 ## Scrapy 配置
-1. 生成模板代码: `poetry run gen scrapy init`
+1. 生成模板代码: `seatools-codegen scrapy init`
 2. 安装相关依赖: `poetry add scrapy`
-- 生成xxx爬虫: `poetry run gen scrapy genspider {name} {domain}`, 该命令生成的Spider在`src/{{ cookiecutter.package_name}}/scrapy/spiders`下, 同时会生成可执行的cmd文件`src/{{ cookiecutter.package_name}}/cmd/{name}.py`
+- 生成xxx爬虫: `seatools-codegen scrapy genspider {name} {domain}`, 该命令生成的Spider在`src/{{ cookiecutter.package_name}}/scrapy/spiders`下, 同时会生成可执行的cmd文件`src/{{ cookiecutter.package_name}}/cmd/{name}.py`
 - 执行xxx爬虫: `poetry run {name} --env [dev|test|pro]`, 部署执行`bash bin/{name}.sh` 或者`docker`执行, 具体参考上文`新增 CMD 命令`
 3. 使用其他的scrapy命令 `poetry run scrapy {shell|...} ...`
 
@@ -166,7 +166,7 @@ docker-compose up -d hello
 **PS: 使用自动化工具推荐使用`undetected-chromedriver`代替`selenium`**
 
 ## 任务生成
-1. 生成任务代码: `poetry run gen task --task_class xxx --task_name 示例任务 [--async]`
+1. 生成任务代码: `seatools-codegen task --task_class xxx --task_name 示例任务 [--async]`
 - task_class: 任务类名
 - task_name: 任务名称
 - async[可选]: 是否生成async的任务
@@ -182,9 +182,9 @@ docker-compose up -d hello
 4. `src/`: 项目源码
 5. `src/{{cookiecutter.package_name}}`: 项目源码主包, 所有代码均放在该包下
 6. `src/{{cookiecutter.package_name}}/cmd`: 代码命令行入口
-7. `src/{{cookiecutter.package_name}}/extensions/`: 拓展包
-8. `src/{{cookiecutter.package_name}}/extensions/gen`: 代码生成器
-9. `src/{{cookiecutter.package_name}}/extensions/chrome`: chrome/chromedriver下载器
+~~7. `src/{{cookiecutter.package_name}}/extensions/`: 拓展包~~ 拓展命令由拓展包生成可执行工具管理
+~~8. `src/{{cookiecutter.package_name}}/extensions/gen`: 代码生成器~~ 改为使用`seatools-codegen`命令工具
+~~9. `src/{{cookiecutter.package_name}}/extensions/chrome`: chrome/chromedriver下载器~~ 改为使用`seatools-chrome`命令工具
 8. `src/{{cookiecutter.package_name}}/models/`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
 9. `src/{{cookiecutter.package_name}}/config/`: 配置工具, 通过该工具可获取配置信息(包括项目路径, 配置对象等)
 ~~10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作~~ 使用`seatools.sqlalchemy.utils`代替
