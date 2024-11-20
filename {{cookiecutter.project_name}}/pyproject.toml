@@ -63,8 +63,6 @@ myst-parser = {version = ">=0.16.1"}
 
 [tool.poetry.scripts]
 main = "{{cookiecutter.package_name}}.cmd.main:main"
-chrome = "extensions.chrome.main:main"
-gen = "extensions.gen.main:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
