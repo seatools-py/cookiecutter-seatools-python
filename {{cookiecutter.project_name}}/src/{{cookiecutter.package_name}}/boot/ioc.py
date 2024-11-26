@@ -5,7 +5,7 @@ from {{ cookiecutter.package_name }}.config import get_config_dir
 def ioc_starter():
     # 运行ioc
     ioc.run(scan_package_names=[
-        'seatools.ioc.starter.sqlalchemy', # 自动装载db bean实例, 若不需要可移除
+        # 'seatools.ioc.starter.sqlalchemy', # 自动装载db bean实例, 若需要可取消注释
         '{{cookiecutter.package_name}}'
     ],
             config_dir=get_config_dir(),
