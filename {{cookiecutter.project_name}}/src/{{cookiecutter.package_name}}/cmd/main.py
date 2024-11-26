@@ -3,7 +3,7 @@ import sys
 import click
 from loguru import logger
 from typing import Optional
-from seatools.logger.setup import setup_loguru, setup_sqlalchemy
+from seatools.logger.setup import setup_loguru, setup_logging
 
 from {{ cookiecutter.package_name }}.config import cfg
 from {{ cookiecutter.package_name }} import utils
