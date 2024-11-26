@@ -185,10 +185,10 @@ docker-compose up -d hello
 ~~7. `src/{{cookiecutter.package_name}}/extensions/`: 拓展包~~ 拓展命令由拓展包生成可执行工具管理
 ~~8. `src/{{cookiecutter.package_name}}/extensions/gen`: 代码生成器~~ 改为使用`seatools-codegen`命令工具
 ~~9. `src/{{cookiecutter.package_name}}/extensions/chrome`: chrome/chromedriver下载器~~ 改为使用`seatools-chrome`命令工具
-8. `src/{{cookiecutter.package_name}}/models/`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
+8. `src/{{cookiecutter.package_name}}/models/`: 数据模型, 包含配置数据模型, 常量数据模型, ~~数据库模型等均放在该包下~~ 数据库配置由`seatools.ioc.starter.sqlalchemy`或者`seatools.ioc.starter.django`代替
 9. `src/{{cookiecutter.package_name}}/config/`: 配置工具, 通过该工具可获取配置信息(包括项目路径, 配置对象等)
 ~~10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作~~ 使用`seatools.sqlalchemy.utils`代替
-11. `src/{{cookiecutter.package_name}}/logger/*`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
+~~11. `src/{{cookiecutter.package_name}}/logger/*`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析~~ 使用`seatools.logger.setup.*`代替
 ~~12. `src/{{cookiecutter.package_name}}/decorators`: 装饰器工具包~~ 使用`seatools.sqlalchemy.decorators.ioc`代替
 13. `tests/`: 测试代码
 
