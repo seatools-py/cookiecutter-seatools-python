@@ -205,19 +205,22 @@ print(cfg().project_name)
 
 ### 2. DB支持
 内置基于sqlalchemy2.x支持, 使用步骤如下(以mysql为例, 其他同理):
-1. 在 `{{ cookiecutter.package_name }}.models.config.py` 文件的 `MultiDBConfig` 创建一个变量配置如下:
+1. 在 `src/{{ cookiecutter.package_name }}/boot/ioc.py` 文件新增db的`starter`:
 ```python
-# 省略无用代码
-...
-from seatools.sqlalchemy.dbconfig import MysqlConfig
+from seatools import ioc
+from {{ cookiecutter.package_name }}.config import get_config_dir
 
 
-class MultiDBConfig(BaseModel):
-    """多 DB 配置"""
-    mysql_test_db: Optional[MysqlConfig] = MysqlConfig()
+def ioc_starter():
+    # 运行ioc
+    ioc.run(scan_package_names=[
+        'seatools.ioc.starter.sqlalchemy', # 自动装载db bean实例
+        '{{cookiecutter.package_name}}'
+    ],
+            config_dir=get_config_dir(),
+            # 需要过滤扫描的模块, 示例: {{ cookiecutter.package_name }}.xxx
+            exclude_modules=[])
 
-# 省略无用代码
-...
 ```
 2. 在配置文件 `config/application.yml` 或 环境配置文件 `config/application-{env}.yml` 中添加如下配置:
 ```yaml
@@ -234,17 +237,13 @@ db:
 ```
 3. 操作数据库:
 ```python
-from seatools import ioc
+from {{ cookiecutter.package_name }}.boot import start
 from seatools.sqlalchemy.utils import new_client
 from sqlalchemy import text
-from {{ cookiecutter.package_name }}.config import cfg, get_config_dir
+from {{ cookiecutter.package_name }}.config import cfg
 
-# 启动 ioc
-ioc.run(
-    scan_package_names='{{cookiecutter.package_name}}',
-    config_dir=get_config_dir(),
-    exclude_modules=[],
-)
+# 启动依赖
+start()
 
 """
 推荐方式, 装饰器
