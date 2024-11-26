@@ -2,11 +2,12 @@ import os
 import sys
 import click
 from loguru import logger
-from {{ cookiecutter.package_name }}.config import cfg, get_config_dir
-from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_logging
-from {{ cookiecutter.package_name }} import utils
-from seatools import ioc
 from typing import Optional
+from seatools.logger.setup import setup_loguru, setup_sqlalchemy
+
+from {{ cookiecutter.package_name }}.config import cfg
+from {{ cookiecutter.package_name }} import utils
+from {{ cookiecutter.package_name }}.boot import start
 
 
 @click.command()
@@ -31,16 +32,17 @@ def main(project_dir: Optional[str] = None,
         os.environ['ENV'] = env
     if label:
         os.environ['LABEL'] = label
-    # 运行ioc
-    ioc.run(scan_package_names='{{cookiecutter.package_name}}',
-            config_dir=get_config_dir(),
-            exclude_modules=[],
-            )
+
+    # 启动项目依赖
+    start()
+
     # 设置日志文件
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup_loguru('{}.log'.format(file_name), level=log_level, label='main')
+    setup_loguru(utils.get_log_path('{}.log'.format(file_name)), level=log_level,
+                 extra={'project': cfg().project_name, 'label': 'main'})
     # 设置日志sqlalchemy
-    setup_logging('{}.sqlalchemy.log'.format(file_name), 'sqlalchemy', level=log_level, label=label)
+    setup_logging(utils.get_log_path('{}.sqlalchemy.log'.format(file_name)), 'sqlalchemy', level=log_level,
+                  extra={'project': cfg().project_name, 'label': 'main'})
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
 
 
