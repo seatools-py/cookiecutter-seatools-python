@@ -1,5 +1,6 @@
 # 项目名称
 project_name: '{{ cookiecutter.project_name }}'
+package_name: '{{ cookiecutter.package_name }}'
 # 日志目录
 log_dir: ./logs
 # sqlalchemy配置
