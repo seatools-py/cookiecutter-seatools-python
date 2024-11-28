@@ -1,9 +1,6 @@
 import os
-import sys
 import click
-from loguru import logger
 from typing import Optional
-from seatools.logger.setup import setup_loguru, setup_logging
 
 from {{ cookiecutter.package_name }}.boot import start
 
