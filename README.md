@@ -19,7 +19,7 @@
 ## cookiecutter-seatools-python 是什么？
 ### 一个基于 `cookiecutter` 的 `python` 项目模板, 项目基于 `poetry` 与 python集成工具包 [`seatools`](https://gitee.com/dragons96/seatools.git), 支持如下功能:
 1. cmd工具(基于`click`)
-2. web服务(可任选`fastapi`, `flask`, `django`)
+2. web服务(可任选`fastapi`, `flask`, `django`), 也可多个`web`同时使用
 3. 数据库(支持`sqlalchemy`+[`mysql`|`postgresql`|`clickhouse`|`hive`|`impala`|...], 提供`sqlalchemy`便捷操作工具)
 4. Redis(支持`redis`, `redis-om`, 对`reids-om`提供部分适配)
 5. 爬虫(支持`scrapy`, [`undetected-chromedriver`(基于selenium的抹除指纹自动化框架)](https://github.com/ultrafunkamsterdam/undetected-chromedriver))
@@ -46,5 +46,13 @@
 3. 提供执行脚本、部署脚本的自动生成工具，大幅度减少部署过程的时间成本
 4. 针对常用框架提供了适配的日志组件与集成方式，使得系统的维护与监控变的更加容易
 5. 轻量, 遵从最小化依赖原则, 仅内置项目运行必备的依赖
+
+## 各场景指南
+- [`常规脚本项目指南`](./docs/常规脚本任务场景.md)
+- [`Django项目指南`](./docs/Django项目指南.md)
+- [`FastAPI项目指南`](./docs/FastAPI项目指南.md)
+- [`Flask项目指南`](./docs/Flask项目指南.md)
+- [`Scrapy项目指南`](./docs/Scrapy项目指南.md)
+
 
 #### 简而言之，`cookiecutter-seatools-python` 模板项目提供了从[开发->测试->部署->维护/监控]一整套流程的支持与优化, 墙裂推荐!!!
