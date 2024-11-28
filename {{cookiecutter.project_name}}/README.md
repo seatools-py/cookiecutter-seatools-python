@@ -196,9 +196,33 @@ mysql:
   password:
   db: test_db
 ```
-2. 在`src/{{ cookiecutter.package_name }}` 下创建 `models.py` 文件, 代码如下:
+2. 在`src/{{ cookiecutter.package_name }}` 下创建 `models.py` 文件, 使用`ioc`自动装配`bean`容器, 代码如下:
 ```python
-from seatools.models import
+from seatools.models import BaseModel
+from seatools.ioc import ConfigurationPropertiesBean
+
+
+@ConfigurationPropertiesBean(prop='mysql') # 选择mysql层级的属性注入, 若要注入全部属性可不填
+class MysqlConfig(BaseModel):
+    host: str
+    port: int
+    user: str
+    password: str
+    db: str
+
+```
+3. 在 `src/{{ cookiecutter.package_name }}` 下创建示例运行文件`main.py`, 代码如下:
+```python
+
+if __name__ == '__main__':
+    from {{ cookiecutter.package_name }}.boot import start
+    from {{ cookiecutter.package_name }}.models import MysqlConfig
+    from seatools.ioc import Autowired
+    # 启动ioc
+    start()
+    # 从ioc中获取MysqlConfig
+    mysql_config = Autowired(cls=MysqlConfig) # MysqlConfig的代理实例
+    print(mysql_config.host, mysql_config.port) # 使用mysql_config对象
 ```
 
 ### 2. DB支持
