@@ -21,7 +21,7 @@ seatools:
       port: 3306
       user: root
       password: 123456
-      db: test_db
+      database: test_db
       # 驱动, 对应sqlalchemy的schema, 例如: sqlite, sqlite+aiosqlite, mysql+pymysql, mysql+aiomysql等等
       driver: mysql+pymysql
       primary: false # 是否默认
