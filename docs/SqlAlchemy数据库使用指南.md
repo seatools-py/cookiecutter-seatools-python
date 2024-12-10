@@ -9,19 +9,23 @@
 2. 使用`poetry` 更新锁 `poetry lock`, 然后安装依赖 `poetry install`
 
 ## 应用
-1. 使用`seatools-starter-sqlalchemy`, 安装`poetry add seatools-starter-sqlalchemy`即可
+1. 使用`seatools-starter-sqlalchemy`, 安装`poetry add seatools-starter-sqlalchemy`即可，具体使用方式以[`seatools-starter-sqlalchemy`](https://gitee.com/seatools-py/seatools-starter-sqlalchemy)为准, 可能会存在更新
 2. 在生成的项目的`config/application[-dev|test|pro].yml`任一当前环境的文件中配置数据库, 以`config/application.yml`为例使用`pymysql`驱动配置`mysql`, 安装`poetry add pymysql`, 示例如下:
 ```yaml
-# starter sqlalchemy 的固定名称
-db:
-  # ioc bean 名称
-  test_db:
-    host: 127.0.0.1
-    port: 3306
-    user: root
-    password: 123456
-    db: test_db
-    orm_schema: mysql+pymysql
+# starter sqlalchemy 配置名称
+seatools:
+  datasource:
+    # ioc bean 名称
+    test_db:
+      host: 127.0.0.1
+      port: 3306
+      user: root
+      password: 123456
+      db: test_db
+      # 驱动, 对应sqlalchemy的schema, 例如: sqlite, sqlite+aiosqlite, mysql+pymysql, mysql+aiomysql等等
+      driver: mysql+pymysql
+      primary: false # 是否默认
+      is_async: false # 当driver为异步驱动时, 该值需要设置为true
 ```
 3. 使用方式
 ```python
@@ -47,4 +51,4 @@ if __name__ == '__main__':
     with client.session() as session:
         ...
 ```
-注意: 配置中的`orm_schema`支持配置异步数据库引擎, 配置异步数据库引擎时, @new_session注入的不再是`sqlalchemy.orm.Session` 而是`sqlalchemy.ext.asyncio.AsyncSession`
+注意: 配置中的`driver`支持配置异步数据库引擎, 配置异步数据库引擎时, @new_session注入的不再是`sqlalchemy.orm.Session` 而是`sqlalchemy.ext.asyncio.AsyncSession`

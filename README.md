@@ -54,5 +54,6 @@
 - [`Flask项目指南`](./docs/Flask项目指南.md)
 - [`Scrapy项目指南`](./docs/Scrapy项目指南.md)
 - [`SqlAlchemy数据库使用指南`](./docs/SqlAlchemy数据库使用指南.md)
+- [`Redis使用指南`](./docs/Redis使用指南.md)
 
 #### 简而言之，`cookiecutter-seatools-python` 模板项目提供了从[开发->测试->部署->维护/监控]一整套流程的支持与优化, 墙裂推荐!!!
