@@ -2,6 +2,9 @@
 
 ### 项目仓库地址: https://{{cookiecutter.git_type}}.com/{{cookiecutter.git_user}}/{{ cookiecutter.project_name }}
 
+## 介绍
+本项目深度集成[seatools](https://gitee.com/dragons96/seatools) IOC工具框架
+
 ## 安装依赖
 1. pip install poetry
 2. poetry lock
@@ -166,10 +169,11 @@ docker-compose up -d hello
 **PS: 使用自动化工具推荐使用`undetected-chromedriver`代替`selenium`**
 
 ## 任务生成
-1. 生成任务代码: `seatools-codegen task --task_class xxx --task_name 示例任务 [--async]`
+1. 生成任务代码: `seatools-codegen task --task_class xxx --task_name 示例任务 [--async] [--cmd]`
 - task_class: 任务类名
 - task_name: 任务名称
 - async[可选]: 是否生成async的任务
+- cmd[可选]: 是否生成对应cmd工具
 
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
@@ -305,10 +309,6 @@ with new_client(cfg().db.mysql_test_db, cfg().sqlalchemy).session() as session:
 sqlacodegen mysql://root:123456@127.0.0.1:3306/test_db --outfile ./src/{{cookiecutter.package_name}}/models/db/test_db.py
 ```
 6. 修改`/src/{{cookiecutter.package_name}}/models/db/test_db.py`文件中的`Base`类, 改为使用`from seatools.sqlalchemy import Base`提供的`Base`, 该`Base`类提供了与字典, `pydantic model`相互转化的方法
-
-
-## 拓展
-本项目集成[seatools](https://gitee.com/dragons96/seatools)工具框架
 
 ## 部署
 1. 确保环境变量存在一个python3.9+的环境
