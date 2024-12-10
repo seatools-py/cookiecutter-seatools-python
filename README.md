@@ -17,23 +17,22 @@
 
 
 ## cookiecutter-seatools-python 是什么？
-### 一个基于 `cookiecutter` 的 `python` 项目模板, 项目基于 `poetry` 与 python集成工具包 [`seatools`](https://gitee.com/dragons96/seatools.git), 支持如下功能:
-1. cmd工具(基于`click`)
-2. web服务(可任选`fastapi`, `flask`, `django`), 也可多个`web`同时使用
-3. 数据库(支持`sqlalchemy`+[`mysql`|`postgresql`|`clickhouse`|`hive`|`impala`|...], 提供`sqlalchemy`便捷操作工具)
-4. Redis(支持`redis`, `redis-om`, 对`reids-om`提供部分适配)
-5. 爬虫(支持`scrapy`, [`undetected-chromedriver`(基于selenium的抹除指纹自动化框架)](https://github.com/ultrafunkamsterdam/undetected-chromedriver))
-6. 缓存(基于`cache_tools`)
-7. 自动配置管理(配置文件内容通过在`model`中定义属性将自动注入)
-8. 多环境管理(`dev`, `test`, `pro`)
-9. 统一日志(基于`loguru`, 对常用组件[`uvicorn`, `sqlalchemy`]等`logging`模块做了`loguru`序列化格式适配) 
-10. 测试(使用`pytest`)
-11. IOC支持(基于`seatools`, 可用于解决复杂系统中的依赖混乱, 循环依赖等问题, 灵活易用)
-12. 基于`poetry`命令的代码生成与辅助工具(所有工具均可在项目中修改与定制), 具体支持功能如下:  
+### 一个基于 `cookiecutter` 的 `python` 项目模板, 项目基于 `poetry` 与 [`seatools`](https://gitee.com/dragons96/seatools.git) IOC框架, 支持如下功能:
+1. IOC支持(基于[`seatools`](https://gitee.com/dragons96/seatools.git), 与`Java Spring`类似, 可用于解决复杂系统中的依赖混乱, 循环依赖等问题, 灵活易用, 提供`starter`机制可自行拓展)
+2. cmd工具(基于`click`)
+3. web服务(可任选`fastapi`, `flask`, `django`), 也可多个`web`同时使用
+4. 数据库(支持`sqlalchemy`+[`mysql`|`postgresql`|`clickhouse`|`hive`|`impala`|...], 提供`sqlalchemy`便捷操作工具), 提供启动器：[`seatools-starter-sqlalchemy`](https://gitee.com/seatools-py/seatools-starter-sqlalchemy)
+5. Redis(支持`redis`), 提供启动器：[`seatools-starter-redis`](https://gitee.com/seatools-py/seatools-starter-redis)
+6. 爬虫(支持`scrapy`, [`undetected-chromedriver`(基于selenium的抹除指纹自动化框架)](https://github.com/ultrafunkamsterdam/undetected-chromedriver))
+7. 缓存(基于`cachetools`), 提供启动器：[`seatools-starter-cache`](https://gitee.com/seatools-py/seatools-starter-cache)
+8. 自动配置管理(配置文件内容通过在`model`中定义属性将自动注入)
+9. 多环境管理(`dev`, `test`, `pro`)
+10. 统一日志(基于`loguru`, 对常用组件[`uvicorn`, `sqlalchemy`]等`logging`模块做了`loguru`序列化格式适配)
+11. 测试(使用`pytest`)
+12. 提供相应代码生成器套件[`seatools-codegen`](https://gitee.com/seatools-py/cookiecutter-seatools-python-codegen), 具体支持功能如下:  
     1. 生成自定义任务类模板, 生成自定义任务类针对任务描述, 日志, 异常等常用操作提供的内置的处理  
     2. 生成自定义命令行入口, 生成命令行模板、执行脚本以及docker相关部署脚本 
-    3. 生成`web`(`fastapi`, `flask`, `django`)、`scrapy`模板代码
-    4. 下载`chrome`、`chromedriver`环境，支持自选浏览器版本、系统
+    3. 生成`web`(`fastapi`, `flask`, `django`)、`scrapy`模板代码, 支持多种框架集成
 13. grpc拓展
 
 ### 部署打包支持
