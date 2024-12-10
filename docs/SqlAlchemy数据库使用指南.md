@@ -14,6 +14,10 @@
 ```yaml
 # starter sqlalchemy 配置名称
 seatools:
+  # sqlalchemy 配置
+  sqlalchemy:
+    echo: true
+    pool_cycle: 3600
   datasource:
     # ioc bean 名称
     test_db:
@@ -26,6 +30,9 @@ seatools:
       driver: mysql+pymysql
       primary: false # 是否默认
       is_async: false # 当driver为异步驱动时, 该值需要设置为true
+      # 单独数据库的sqlalchemy覆盖配置
+      sqlalchemy:
+        echo: false
 ```
 3. 使用方式
 ```python
