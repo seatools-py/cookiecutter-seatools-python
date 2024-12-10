@@ -13,5 +13,8 @@
 5. `django`命令工具使用方法`poetry run django` 与 `django` 中的 `python manage.py` 效果一致 
 6. 运行, 正式环境: `poetry run django_runserver --host 0.0.0.0 --port 8000 --env pro` (使用`uvicorn`服务器), 开发环境: `poetry run django runserver`
 
+## 细节
+具体可见[`cookiecutter-seatools-python-codegen`](https://gitee.com/seatools-py/cookiecutter-seatools-python-codegen)文档
+
 ## 项目结构说明
 todo:

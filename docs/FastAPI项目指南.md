@@ -11,5 +11,9 @@
 4. 使用`seatools-codegen`工具生成`fastapi`相关基础代码, windows `seatools-codegen.exe fastapi`, linux/mac: `seatools-codegen fastapi`
 5. 运行, `poetry run fastapi --host 0.0.0.0 --port 8000 --env pro`
 
+## 细节
+具体可见[`cookiecutter-seatools-python-codegen`](https://gitee.com/seatools-py/cookiecutter-seatools-python-codegen)文档
+
+
 ## 项目结构说明
 todo:

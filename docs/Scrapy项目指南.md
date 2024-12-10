@@ -12,5 +12,9 @@
 5. 使用`seatools-codegen`工具生成`Scrapy Spider`爬虫模板代码, windows `seatools-codegen.exe scrapy genspider [name] [domain]`, linux/mac: `seatools-codegen scrapy genspider [name] [domain]`, 示例 `seatools-codegen.exe scrapy genspider quotes quotes.toscrape.com`
 6. 运行, `poetry run [name]`即可运行`seatools-codegen`工具生成的爬虫
 
+## 细节
+具体可见[`cookiecutter-seatools-python-codegen`](https://gitee.com/seatools-py/cookiecutter-seatools-python-codegen)文档
+
+
 ## 项目结构说明
 todo:
